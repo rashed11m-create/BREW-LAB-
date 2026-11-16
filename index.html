@@ -2,220 +2,140 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BREW LAB | Coffee Experience</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BREW LAB</title>
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-margin:0;
-background:#100f0d;
-color:#f5eee3;
-font-family:Arial,sans-serif;
-}
-header{
-padding:22px 7%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-border-bottom:1px solid #302820;
-flex-wrap:wrap;
-gap:15px;
-}
-.logo{
-font-size:27px;
-font-weight:bold;
-letter-spacing:3px;
-color:#d6ad7b;
-}
-nav a{
-color:#eee;
-text-decoration:none;
-margin:0 8px;
-font-size:14px;
-}
+body{margin:0;background:#100f0d;color:#f5eee3;font-family:Arial}
+header{padding:20px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;border-bottom:1px solid #302820;gap:15px}
+.logo{font-size:25px;font-weight:bold;color:#d6ad7b;letter-spacing:3px}
+nav a{color:white;text-decoration:none;margin:7px;font-size:13px}
 nav a:hover{color:#d6ad7b}
-.hero{
-padding:85px 8%;
-text-align:center;
-background:linear-gradient(135deg,#251b13,#100f0d);
-}
-.hero h1{font-size:48px;margin:10px}
-.hero h1 span{color:#d6ad7b}
-.hero p{color:#b9aa98;font-size:16px}
-.btn{
-background:#c69b6b;
-color:#17120d;
-border:0;
-padding:14px 28px;
-border-radius:8px;
-font-weight:bold;
-margin-top:15px;
-cursor:pointer;
-}
+.hero{text-align:center;padding:75px 15px;background:linear-gradient(135deg,#382416,#100f0d)}
+.hero h1{font-size:42px}
+.hero span{color:#d6ad7b}
+.hero p{color:#c5b6a5}
+section{padding:40px 6%}
+.title{font-size:25px;margin-bottom:25px}
+.btn{background:#c69b6b;color:#17120d;border:0;padding:13px 23px;border-radius:8px;font-weight:bold;cursor:pointer;margin:5px}
 .btn:hover{background:#e0bd92}
-section{padding:45px 7%}
-.title{font-size:27px;margin-bottom:25px}
-.categories{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-gap:15px;
-}
-.category{
-background:#211c17;
-padding:25px 12px;
-border:1px solid #3b3025;
-border-radius:12px;
-text-align:center;
-cursor:pointer;
-transition:.2s;
-}
-.category:hover,.card:hover{
-border-color:#c69b6b;
-transform:translateY(-3px);
-}
+.categories,.recipes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}
+.category,.card,.box{background:#211c17;border:1px solid #493829;border-radius:13px;padding:20px}
+.category{text-align:center;cursor:pointer}
 .category h3{color:#d6ad7b}
-.recipes{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-}
-.card{
-background:#211c17;
-border:1px solid #3b3025;
-border-radius:13px;
-overflow:hidden;
-transition:.2s;
-}
-.photo{
-height:145px;
-background:linear-gradient(135deg,#60432d,#201710);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:65px;
-}
-.card-content{padding:18px}
-.card h3{margin:5px 0;color:#e5c49b}
-.card p{color:#b9aa98;font-size:13px;line-height:1.7}
-.details{color:#d6ad7b;font-size:12px;line-height:2}
-.card button{
-width:100%;
-padding:12px;
-background:#c69b6b;
-border:0;
-border-radius:7px;
-cursor:pointer;
-font-weight:bold;
-}
-.calculator{
-background:#211c17;
-border:1px solid #493829;
-padding:25px;
-border-radius:13px;
-max-width:550px;
-}
-input,select{
-width:100%;
-padding:13px;
-margin:10px 0;
-border-radius:7px;
-border:1px solid #594532;
-background:#100f0d;
-color:white;
-}
-label{font-size:14px;color:#d6ad7b}
-.result{
-color:#d6ad7b;
-font-size:18px;
-margin-top:15px;
-line-height:2;
-}
-footer{
-text-align:center;
-padding:30px;
-color:#8e8072;
-border-top:1px solid #302820;
-}
-.empty{color:#b9aa98}
-@media(max-width:600px){
-.hero h1{font-size:35px}
-header{justify-content:center}
-nav{text-align:center;line-height:2.5}
-section{padding:35px 5%}
-}
+.photo{text-align:center;font-size:55px;padding:15px}
+.card h3{color:#e5c49b}
+.card p{color:#b9aa98;line-height:1.7;font-size:14px}
+.details{color:#d6ad7b;font-size:13px;line-height:2}
+.card button{width:100%;padding:12px;background:#c69b6b;border:0;border-radius:7px;cursor:pointer}
+input,select{width:100%;padding:13px;margin:9px 0;background:#100f0d;color:white;border:1px solid #594532;border-radius:7px}
+label{color:#d6ad7b;font-size:14px}
+.box{max-width:600px}
+.result{color:#d6ad7b;line-height:2;margin-top:15px}
+.timer{text-align:center;padding:25px}
+.timer-display{font-size:65px;font-weight:bold;color:#d6ad7b;margin:20px}
+.timer-stage{font-size:19px;color:#e5c49b;margin:15px}
+.progress{height:8px;background:#493829;border-radius:10px;margin:20px 0;overflow:hidden}
+.progress div{height:100%;background:#d6ad7b;width:0%;transition:.3s}
+footer{text-align:center;padding:30px;color:#928475;border-top:1px solid #302820}
+@media(max-width:600px){.hero h1{font-size:32px}.timer-display{font-size:52px}header{justify-content:center}nav{text-align:center}}
 </style>
 </head>
 <body>
+
 <header>
 <div class="logo">BREW LAB ☕</div>
 <nav>
 <a href="#recipes">Recipes</a>
 <a href="#categories">Categories</a>
 <a href="#calculator">Calculator</a>
+<a href="#timer">Brew Timer</a>
 <a href="#profiles">Coffee Profiles</a>
 </nav>
 </header>
+
 <div class="hero">
 <p>YOUR COFFEE EXPERIENCE STARTS HERE</p>
 <h1>اكتشف عالم <span>القهوة</span></h1>
-<p>وصفات احترافية، إعدادات دقيقة، وتجارب قهوة مختلفة.</p>
-<button class="btn" onclick="document.getElementById('recipes').scrollIntoView()">
-اكتشف الوصفات
-</button>
+<p>وصفات احترافية وتجارب قهوة مختلفة.</p>
+<button class="btn" onclick="go('recipes')">اكتشف الوصفات</button>
 </div>
+
 <section id="categories">
 <h2 class="title">استكشف الأقسام</h2>
 <div class="categories">
-<div class="category" onclick="filterRecipes('V60')">
-<h3>V60</h3><p>قهوة التقطير</p>
-</div>
-<div class="category" onclick="filterRecipes('xBloom')">
-<h3>xBloom</h3><p>وصفات المكينة</p>
-</div>
-<div class="category" onclick="filterRecipes('Cold')">
-<h3>Cold Coffee</h3><p>القهوة الباردة</p>
-</div>
-<div class="category" onclick="filterRecipes('All')">
-<h3>ALL RECIPES</h3><p>جميع الوصفات</p>
-</div>
+<div class="category" onclick="filterRecipes('V60')"><h3>V60</h3><p>قهوة التقطير</p></div>
+<div class="category" onclick="filterRecipes('xBloom')"><h3>xBloom</h3><p>وصفات المكينة</p></div>
+<div class="category" onclick="filterRecipes('Cold')"><h3>Cold Coffee</h3><p>القهوة الباردة</p></div>
+<div class="category" onclick="filterRecipes('All')"><h3>ALL RECIPES</h3><p>جميع الوصفات</p></div>
 </div>
 </section>
+
 <section id="recipes">
 <h2 class="title">وصفات القهوة ☕</h2>
 <div class="recipes" id="recipeList"></div>
 </section>
+
 <section id="calculator">
 <h2 class="title">Coffee Calculator</h2>
-<div class="calculator">
-<p>احسب كمية الماء والثلج حسب كمية القهوة.</p>
-
-كمية القهوة (غرام)
-نسبة التخمير
+<div class="box">
+<label>كمية القهوة (g)</label>
+<input type="number" id="coffee" value="20" min="1">
+<label>نسبة التخمير</label>
+<select id="ratio">
 <option value="15">1:15</option>
 <option value="16" selected>1:16</option>
 <option value="17">1:17</option>
 <option value="18">1:18</option>
 </select>
-
-نوع التحضير
+<label>طريقة التحضير</label>
+<select id="type">
 <option value="hot">Hot V60</option>
 <option value="cold">Iced V60</option>
 </select>
-
-Calculate
-
+<button class="btn" onclick="calculate()">Calculate</button>
 <div class="result" id="result"></div>
 </div>
 </section>
+
+<!-- SMART BREW TIMER -->
+<section id="timer">
+<h2 class="title">⏱️ Smart Brew Timer</h2>
+<div class="box timer">
+
+<label>اختر طريقة التحضير</label>
+<select id="brewMode" onchange="changeMode()">
+<option value="v60">V60</option>
+<option value="xbloom">xBloom</option>
+</select>
+
+<div class="timer-display" id="clock">00:00</div>
+<div class="timer-stage" id="stage">جاهز للتحضير ☕</div>
+
+<div class="progress"><div id="progressBar"></div></div>
+
+<div id="stageInfo" class="result">اضغط Start للبدء</div>
+
+<button class="btn" onclick="startTimer()">START</button>
+<button class="btn" onclick="pauseTimer()">PAUSE</button>
+<button class="btn" onclick="resetTimer()">RESET</button>
+
+</div>
+</section>
+
 <section id="profiles">
 <h2 class="title">☕ Coffee Profiles</h2>
-<p style="color:#b9aa98">سجّل أنواع البن المفضلة عندك واحتفظ بتفاصيلها.</p>
-<div class="calculator">
+<div class="box">
 
-Bean Name
-Coffee Roaster
-Country of Origin
+<label>Bean Name</label>
+<input id="beanName" placeholder="Ethiopia Guji">
+
+<label>Coffee Roaster</label>
+<input id="roaster" placeholder="اسم المحمصة">
+
+<label>Country of Origin</label>
+<select id="origin">
 <option>Ethiopia</option>
 <option>Colombia</option>
 <option>Brazil</option>
@@ -225,81 +145,57 @@ Country of Origin
 <option>Other</option>
 </select>
 
-Processing
+<label>Processing</label>
+<select id="processing">
 <option>Washed</option>
 <option>Natural</option>
 <option>Anaerobic</option>
 <option>Honey</option>
 </select>
 
-Roast Level
+<label>Roast Level</label>
+<select id="roast">
 <option>Light</option>
 <option>Medium</option>
 <option>Dark</option>
 </select>
 
-Flavor Notes
-Rating / 10
-SAVE COFFEE PROFILE
+<label>Flavor Notes</label>
+<input id="flavors" placeholder="Chocolate, Strawberry, Nuts">
 
+<label>Rating / 10</label>
+<input id="rating" type="number" min="1" max="10" value="8">
+
+<button class="btn" onclick="addBean()">SAVE PROFILE</button>
 </div>
+
 <h2 class="title">My Coffee Collection</h2>
-<div id="beanList" class="recipes"></div>
+<div class="recipes" id="beanList"></div>
 </section>
+
 <footer>
 BREW LAB © 2026
 <p>MADE FOR COFFEE LOVERS.</p>
 </footer>
+
 <script>
 const recipes=[
-{
-name:"Classic V60",
-type:"V60",
-emoji:"☕",
-description:"وصفة كلاسيكية متوازنة لمحبي القهوة المختصة.",
-coffee:"20g",water:"320ml",temp:"93°C",grind:"Medium"
-},
-{
-name:"Chocolate V60",
-type:"V60",
-emoji:"🍫",
-description:"وصفة تبرز نكهات الشوكولاتة والكاكاو.",
-coffee:"20g",water:"300ml",temp:"92°C",grind:"Medium Fine"
-},
-{
-name:"xBloom Signature",
-type:"xBloom",
-emoji:"⚙️",
-description:"وصفة لتجربة القهوة باستخدام xBloom.",
-coffee:"18g",water:"270ml",temp:"93°C",grind:"Medium"
-},
-{
-name:"Iced V60",
-type:"Cold",
-emoji:"🧊",
-description:"قهوة باردة منعشة بطعم مركز.",
-coffee:"20g",water:"150ml + 150g ice",temp:"92°C",grind:"Medium Fine"
-},
-{
-name:"Fruity V60",
-type:"V60",
-emoji:"🍓",
-description:"وصفة تبرز النكهات الفاكهية والحموضة اللطيفة.",
-coffee:"20g",water:"320ml",temp:"94°C",grind:"Medium"
-},
-{
-name:"xBloom Iced",
-type:"xBloom",
-emoji:"❄️",
-description:"تجربة قهوة باردة باستخدام مكينة xBloom.",
-coffee:"18g",water:"200ml",temp:"92°C",grind:"Medium"
-}
+{name:"Classic V60",type:"V60",emoji:"☕",description:"وصفة كلاسيكية متوازنة.",coffee:"20g",water:"320ml",temp:"93°C",grind:"Medium"},
+{name:"Chocolate V60",type:"V60",emoji:"🍫",description:"نكهات الشوكولاتة والكاكاو.",coffee:"20g",water:"300ml",temp:"92°C",grind:"Medium Fine"},
+{name:"xBloom Signature",type:"xBloom",emoji:"⚙️",description:"وصفة خاصة بمكينة xBloom.",coffee:"18g",water:"270ml",temp:"93°C",grind:"Medium"},
+{name:"Iced V60",type:"Cold",emoji:"🧊",description:"قهوة باردة ومنعشة.",coffee:"20g",water:"150ml + 150g ice",temp:"92°C",grind:"Medium Fine"},
+{name:"Fruity V60",type:"V60",emoji:"🍓",description:"نكهات فاكهية وحموضة لطيفة.",coffee:"20g",water:"320ml",temp:"94°C",grind:"Medium"},
+{name:"xBloom Iced",type:"xBloom",emoji:"❄️",description:"قهوة باردة باستخدام xBloom.",coffee:"18g",water:"200ml",temp:"92°C",grind:"Medium"}
 ];
+
+function go(id){
+document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+
 function showRecipes(list){
 document.getElementById("recipeList").innerHTML=list.map(r=>`
 <div class="card">
 <div class="photo">${r.emoji}</div>
-<div class="card-content">
 <h3>${r.name}</h3>
 <p>${r.description}</p>
 <div class="details">
@@ -309,44 +205,149 @@ Temperature: ${r.temp}<br>
 Grind: ${r.grind}
 </div>
 <br>
-<button onclick="alert('Recipe: ${r.name}\\nCoffee: ${r.coffee}\\nWater: ${r.water}\\nTemperature: ${r.temp}\\nGrind: ${r.grind}')">
-View Recipe
-</button>
-</div>
-</div>
-`).join("");
+<button onclick="alert('${r.name}\\nCoffee: ${r.coffee}\\nWater: ${r.water}\\nTemperature: ${r.temp}\\nGrind: ${r.grind}')">VIEW RECIPE</button>
+</div>`).join("");
 }
+
 function filterRecipes(type){
 showRecipes(type==="All"?recipes:recipes.filter(r=>r.type===type));
-document.getElementById("recipes").scrollIntoView({behavior:"smooth"});
+go("recipes");
 }
+
 function calculate(){
-let coffee=Number(document.getElementById("coffee").value);
-let ratio=Number(document.getElementById("ratio").value);
+let c=Number(document.getElementById("coffee").value);
+let r=Number(document.getElementById("ratio").value);
 let type=document.getElementById("type").value;
-if(!Number.isFinite(coffee)||coffee<=0){
-document.getElementById("result").innerHTML="أدخل كمية صحيحة.";
+if(!Number.isFinite(c)||c<=0){
+document.getElementById("result").innerText="أدخل كمية صحيحة";
 return;
 }
-let total=coffee*ratio;
+let total=c*r;
 if(type==="hot"){
-document.getElementById("result").innerHTML=
-"إجمالي الماء: "+total+" ml";
+document.getElementById("result").innerText="إجمالي الماء: "+total+" ml";
 }else{
-let ice=Math.round(total*0.5);
-let water=total-ice;
-document.getElementById("result").innerHTML=
-"الماء الساخن: "+water+" ml<br>الثلج: "+ice+" g";
+let ice=Math.round(total*.5);
+document.getElementById("result").innerHTML="الماء الساخن: "+(total-ice)+" ml<br>الثلج: "+ice+" g";
 }
 }
+
+/* BREW TIMER */
+let timerInterval=null;
+let elapsed=0;
+let running=false;
+let lastStage=-1;
+
+const v60Stages=[
+{time:0,name:"Blooming",info:"صب 40g ماء لترطيب القهوة."},
+{time:30,name:"Pour 1",info:"ابدأ الصبة الأولى بهدوء."},
+{time:60,name:"Pour 2",info:"أكمل الصب تدريجياً."},
+{time:100,name:"Final Pour",info:"الصبة الأخيرة."},
+{time:150,name:"Drawdown",info:"انتظر نزول الماء."},
+{time:180,name:"Finished ☕",info:"انتهى التحضير! استمتع بقهوّتك."}
+];
+
+const xBloomStages=[
+{time:0,name:"Preparing",info:"جهّز البن والماء والمكينة."},
+{time:30,name:"Brewing",info:"تابع عملية التحضير."},
+{time:120,name:"Finishing",info:"اقترب التحضير من الانتهاء."},
+{time:180,name:"Finished ☕",info:"انتهى التحضير!"}
+];
+
+function getStages(){
+return document.getElementById("brewMode").value==="v60"?v60Stages:xBloomStages;
+}
+
+function changeMode(){
+resetTimer();
+document.getElementById("stage").innerText="جاهز للتحضير ☕";
+document.getElementById("stageInfo").innerText="اضغط Start للبدء";
+}
+
+function formatTime(s){
+let m=Math.floor(s/60);
+let sec=s%60;
+return String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0");
+}
+
+function beep(){
+try{
+let ctx=new (window.AudioContext||window.webkitAudioContext)();
+let oscillator=ctx.createOscillator();
+let gain=ctx.createGain();
+oscillator.connect(gain);
+gain.connect(ctx.destination);
+oscillator.frequency.value=800;
+gain.gain.value=.15;
+oscillator.start();
+oscillator.stop(ctx.currentTime+.2);
+}catch(e){}
+}
+
+function updateTimer(){
+let stages=getStages();
+let stageIndex=0;
+
+for(let i=0;i<stages.length;i++){
+if(elapsed>=stages[i].time)stageIndex=i;
+}
+
+let current=stages[stageIndex];
+
+if(stageIndex!==lastStage){
+lastStage=stageIndex;
+document.getElementById("stage").innerText=current.name;
+document.getElementById("stageInfo").innerText=current.info;
+if(elapsed>0)beep();
+}
+
+document.getElementById("clock").innerText=formatTime(elapsed);
+
+let total=stages[stages.length-1].time;
+document.getElementById("progressBar").style.width=Math.min(100,elapsed/total*100)+"%";
+
+if(elapsed>=total){
+pauseTimer();
+document.getElementById("stage").innerText="Finished ☕";
+document.getElementById("stageInfo").innerText="استمتع بقهوّتك!";
+}
+}
+
+function startTimer(){
+if(running)return;
+if(elapsed>=getStages()[getStages().length-1].time)resetTimer();
+running=true;
+timerInterval=setInterval(()=>{
+elapsed++;
+updateTimer();
+},1000);
+}
+
+function pauseTimer(){
+running=false;
+clearInterval(timerInterval);
+}
+
+function resetTimer(){
+pauseTimer();
+elapsed=0;
+lastStage=-1;
+document.getElementById("clock").innerText="00:00";
+document.getElementById("stage").innerText="جاهز للتحضير ☕";
+document.getElementById("stageInfo").innerText="اضغط Start للبدء";
+document.getElementById("progressBar").style.width="0%";
+}
+
+/* COFFEE PROFILES */
 let beans=JSON.parse(localStorage.getItem("brewBeans")||"[]");
-function escapeHTML(value){
-return String(value).replace(/[&<>"']/g,c=>({
+
+function escapeHTML(v){
+return String(v).replace(/[&<>"']/g,c=>({
 "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
 }[c]));
 }
+
 function addBean(){
-const bean={
+let bean={
 name:document.getElementById("beanName").value.trim(),
 roaster:document.getElementById("roaster").value.trim(),
 origin:document.getElementById("origin").value,
@@ -355,27 +356,30 @@ roast:document.getElementById("roast").value,
 flavors:document.getElementById("flavors").value.trim(),
 rating:Number(document.getElementById("rating").value)
 };
+
 if(!bean.name||!bean.roaster||!bean.flavors){
 alert("Please complete all fields");
 return;
 }
-if(bean.rating<1||bean.rating>10){
+if(!Number.isInteger(bean.rating)||bean.rating<1||bean.rating>10){
 alert("Rating must be between 1 and 10");
 return;
 }
+
 beans.push(bean);
 localStorage.setItem("brewBeans",JSON.stringify(beans));
 renderBeans();
-document.getElementById("beanName").value="";
-document.getElementById("roaster").value="";
-document.getElementById("flavors").value="";
-alert("Coffee profile saved successfully!");
+
+["beanName","roaster","flavors"].forEach(id=>{
+document.getElementById(id).value="";
+});
+alert("Coffee profile saved!");
 }
+
 function renderBeans(){
 document.getElementById("beanList").innerHTML=beans.map((b,i)=>`
 <div class="card">
 <div class="photo">☕</div>
-<div class="card-content">
 <h3>${escapeHTML(b.name)}</h3>
 <p>Roaster: ${escapeHTML(b.roaster)}</p>
 <div class="details">
@@ -387,20 +391,21 @@ Rating: ⭐ ${b.rating}/10
 </div>
 <br>
 <button onclick="deleteBean(${i})">DELETE PROFILE</button>
-</div>
-</div>
-`).join("")||'<p class="empty">No coffee profiles yet.</p>';
+</div>`).join("")||"<p>No coffee profiles yet.</p>";
 }
+
 function deleteBean(i){
-if(confirm("Delete this coffee profile?")){
+if(confirm("Delete this profile?")){
 beans.splice(i,1);
 localStorage.setItem("brewBeans",JSON.stringify(beans));
 renderBeans();
 }
 }
+
 showRecipes(recipes);
 calculate();
 renderBeans();
 </script>
+
 </body>
 </html>
