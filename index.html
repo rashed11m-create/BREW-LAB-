@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BREW LAB | Coffee Recipes</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+background:#100f0d;
+color:#f5eee3;
+font-family:Arial,sans-serif;
+}
+header{
+padding:22px 7%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #302820;
+}
+.logo{
+font-size:27px;
+font-weight:bold;
+letter-spacing:3px;
+color:#d6ad7b;
+}
+nav a{
+color:#eee;
+text-decoration:none;
+margin:0 10px;
+font-size:14px;
+}
+.hero{
+padding:85px 8%;
+text-align:center;
+background:linear-gradient(135deg,#251b13,#100f0d);
+}
+.hero h1{
+font-size:48px;
+margin:10px;
+}
+.hero h1 span{color:#d6ad7b}
+.hero p{color:#b9aa98;font-size:16px}
+.btn{
+background:#c69b6b;
+color:#17120d;
+border:0;
+padding:14px 28px;
+border-radius:8px;
+font-weight:bold;
+margin-top:20px;
+cursor:pointer;
+}
+section{padding:45px 7%}
+.title{
+font-size:27px;
+margin-bottom:25px;
+}
+.categories{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:15px;
+}
+.category{
+background:#211c17;
+padding:25px 12px;
+border:1px solid #3b3025;
+border-radius:12px;
+text-align:center;
+cursor:pointer;
+}
+.category:hover,.card:hover{
+border-color:#c69b6b;
+transform:translateY(-3px);
+}
+.category h3{color:#d6ad7b}
+.recipes{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+.card{
+background:#211c17;
+border:1px solid #3b3025;
+border-radius:13px;
+overflow:hidden;
+transition:.2s;
+}
+.photo{
+height:145px;
+background:linear-gradient(135deg,#60432d,#201710);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:65px;
+}
+.card-content{padding:18px}
+.card h3{margin:5px 0;color:#e5c49b}
+.card p{color:#b9aa98;font-size:13px;line-height:1.7}
+.details{
+color:#d6ad7b;
+font-size:12px;
+}
+.card button{
+width:100%;
+padding:12px;
+background:#c69b6b;
+border:0;
+border-radius:7px;
+cursor:pointer;
+font-weight:bold;
+}
+.calculator{
+background:#211c17;
+border:1px solid #493829;
+padding:25px;
+border-radius:13px;
+max-width:550px;
+}
+input,select{
+width:100%;
+padding:13px;
+margin:10px 0;
+border-radius:7px;
+border:1px solid #594532;
+background:#100f0d;
+color:white;
+}
+.result{
+color:#d6ad7b;
+font-size:18px;
+margin-top:15px;
+line-height:2;
+}
+footer{
+text-align:center;
+padding:30px;
+color:#8e8072;
+border-top:1px solid #302820;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">BREW LAB ☕</div>
+<nav>
+<a href="#recipes">الوصفات</a>
+<a href="#categories">الأقسام</a>
+<a href="#calculator">الحاسبة</a>
+</nav>
+</header>
+
+<div class="hero">
+<p>YOUR COFFEE EXPERIENCE STARTS HERE</p>
+<h1>اكتشف عالم <span>القهوة</span></h1>
+<p>وصفات احترافية، إعدادات دقيقة، وتجارب قهوة مختلفة.</p>
+<button class="btn" onclick="document.getElementById('recipes').scrollIntoView({behavior:'smooth'})">
+اكتشف الوصفات
+</button>
+</div>
+
+<section id="categories">
+<h2 class="title">استكشف الأقسام</h2>
+<div class="categories">
+<div class="category" onclick="filterRecipes('V60')">
+<h3>V60</h3><p>قهوة التقطير</p>
+</div>
+<div class="category" onclick="filterRecipes('xBloom')">
+<h3>xBloom</h3><p>وصفات المكينة</p>
+</div>
+<div class="category" onclick="filterRecipes('Cold')">
+<h3>Cold Coffee</h3><p>القهوة الباردة</p>
+</div>
+<div class="category" onclick="filterRecipes('All')">
+<h3>ALL RECIPES</h3><p>جميع الوصفات</p>
+</div>
+</div>
+</section>
+
+<section id="recipes">
+<h2 class="title">وصفات القهوة ☕</h2>
+<div class="recipes" id="recipeList"></div>
+</section>
+
+<section id="calculator">
+<h2 class="title">Coffee Calculator</h2>
+<div class="calculator">
+<p>احسب كمية الماء والثلج حسب كمية القهوة.</p>
+
+<label>كمية القهوة (غرام)</label>
+<input type="number" id="coffee" value="20" min="1">
+
+<label>نسبة التخمير</label>
+<select id="ratio">
+<option value="15">1:15</option>
+<option value="16" selected>1:16</option>
+<option value="17">1:17</option>
+<option value="18">1:18</option>
+</select>
+
+<label>نوع التحضير</label>
+<select id="type">
+<option value="hot">Hot V60</option>
+<option value="cold">Iced V60</option>
+</select>
+
+<button class="btn" onclick="calculate()">Calculate</button>
+<div class="result" id="result"></div>
+</div>
+</section>
+
+<footer>
+BREW LAB © 2026
+<p>MADE FOR COFFEE LOVERS.</p>
+</footer>
+
+<script>
+const recipes=[
+{
+name:"Classic V60",
+type:"V60",
+emoji:"☕",
+description:"وصفة كلاسيكية متوازنة لمحبي القهوة المختصة.",
+coffee:"20g",
+water:"320ml",
+temp:"93°C",
+grind:"Medium"
+},
+{
+name:"Chocolate V60",
+type:"V60",
+emoji:"🍫",
+description:"وصفة تبرز نكهات الشوكولاتة والكاكاو.",
+coffee:"20g",
+water:"300ml",
+temp:"92°C",
+grind:"Medium Fine"
+},
+{
+name:"xBloom Signature",
+type:"xBloom",
+emoji:"⚙️",
+description:"وصفة مخصصة لتجربة القهوة باستخدام xBloom.",
+coffee:"18g",
+water:"270ml",
+temp:"93°C",
+grind:"Medium"
+},
+{
+name:"Iced V60",
+type:"Cold",
+emoji:"🧊",
+description:"قهوة باردة منعشة بطعم مركز.",
+coffee:"20g",
+water:"150ml + 150g ice",
+temp:"92°C",
+grind:"Medium Fine"
+},
+{
+name:"Fruity V60",
+type:"V60",
+emoji:"🍓",
+description:"وصفة تبرز النكهات الفاكهية والحموضة اللطيفة.",
+coffee:"20g",
+water:"320ml",
+temp:"94°C",
+grind:"Medium"
+},
+{
+name:"xBloom Iced",
+type:"xBloom",
+emoji:"❄️",
+description:"تجربة قهوة باردة باستخدام مكينة xBloom.",
+coffee:"18g",
+water:"200ml",
+temp:"92°C",
+grind:"Medium"
+}
+];
+
+function showRecipes(list){
+document.getElementById("recipeList").innerHTML=list.map((r,i)=>`
+<div class="card">
+<div class="photo">${r.emoji}</div>
+<div class="card-content">
+<h3>${r.name}</h3>
+<p>${r.description}</p>
+<div class="details">
+Coffee: ${r.coffee}<br>
+Water: ${r.water}<br>
+Temperature: ${r.temp}<br>
+Grind: ${r.grind}
+</div>
+<br>
+<button onclick="alert('Recipe: ${r.name}\\nCoffee: ${r.coffee}\\nWater: ${r.water}\\nTemperature: ${r.temp}\\nGrind: ${r.grind}')">
+View Recipe
+</button>
+</div>
+</div>
+`).join("");
+}
+
+function filterRecipes(type){
+showRecipes(type==="All"?recipes:recipes.filter(r=>r.type===type));
+document.getElementById("recipes").scrollIntoView({behavior:"smooth"});
+}
+
+function calculate(){
+let coffee=Number(document.getElementById("coffee").value);
+let ratio=Number(document.getElementById("ratio").value);
+let type=document.getElementById("type").value;
+
+if(!Number.isFinite(coffee)||coffee<=0){
+document.getElementById("result").innerHTML="أدخل كمية صحيحة.";
+return;
+}
+
+let total=coffee*ratio;
+
+if(type==="hot"){
+document.getElementById("result").innerHTML=
+"إجمالي الماء: "+total+" ml";
+}else{
+let ice=Math.round(total*0.5);
+let water=total-ice;
+document.getElementById("result").innerHTML=
+"الماء الساخن: "+water+" ml<br>الثلج: "+ice+" g";
+}
+}
+
+showRecipes(recipes);
+calculate();
+</script>
+
+</body>
+</html>
