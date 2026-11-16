@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BREW LAB | Coffee Recipes</title>
-
+<title>BREW LAB | Coffee Experience</title>
 <style>
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
 margin:0;
 background:#100f0d;
@@ -19,6 +19,8 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 border-bottom:1px solid #302820;
+flex-wrap:wrap;
+gap:15px;
 }
 .logo{
 font-size:27px;
@@ -29,18 +31,16 @@ color:#d6ad7b;
 nav a{
 color:#eee;
 text-decoration:none;
-margin:0 10px;
+margin:0 8px;
 font-size:14px;
 }
+nav a:hover{color:#d6ad7b}
 .hero{
 padding:85px 8%;
 text-align:center;
 background:linear-gradient(135deg,#251b13,#100f0d);
 }
-.hero h1{
-font-size:48px;
-margin:10px;
-}
+.hero h1{font-size:48px;margin:10px}
 .hero h1 span{color:#d6ad7b}
 .hero p{color:#b9aa98;font-size:16px}
 .btn{
@@ -50,14 +50,12 @@ border:0;
 padding:14px 28px;
 border-radius:8px;
 font-weight:bold;
-margin-top:20px;
+margin-top:15px;
 cursor:pointer;
 }
+.btn:hover{background:#e0bd92}
 section{padding:45px 7%}
-.title{
-font-size:27px;
-margin-bottom:25px;
-}
+.title{font-size:27px;margin-bottom:25px}
 .categories{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
@@ -70,6 +68,7 @@ border:1px solid #3b3025;
 border-radius:12px;
 text-align:center;
 cursor:pointer;
+transition:.2s;
 }
 .category:hover,.card:hover{
 border-color:#c69b6b;
@@ -99,10 +98,7 @@ font-size:65px;
 .card-content{padding:18px}
 .card h3{margin:5px 0;color:#e5c49b}
 .card p{color:#b9aa98;font-size:13px;line-height:1.7}
-.details{
-color:#d6ad7b;
-font-size:12px;
-}
+.details{color:#d6ad7b;font-size:12px;line-height:2}
 .card button{
 width:100%;
 padding:12px;
@@ -128,6 +124,7 @@ border:1px solid #594532;
 background:#100f0d;
 color:white;
 }
+label{font-size:14px;color:#d6ad7b}
 .result{
 color:#d6ad7b;
 font-size:18px;
@@ -140,29 +137,33 @@ padding:30px;
 color:#8e8072;
 border-top:1px solid #302820;
 }
+.empty{color:#b9aa98}
+@media(max-width:600px){
+.hero h1{font-size:35px}
+header{justify-content:center}
+nav{text-align:center;line-height:2.5}
+section{padding:35px 5%}
+}
 </style>
 </head>
-
 <body>
-
 <header>
 <div class="logo">BREW LAB ☕</div>
 <nav>
-<a href="#recipes">الوصفات</a>
-<a href="#categories">الأقسام</a>
-<a href="#calculator">الحاسبة</a>
+<a href="#recipes">Recipes</a>
+<a href="#categories">Categories</a>
+<a href="#calculator">Calculator</a>
+<a href="#profiles">Coffee Profiles</a>
 </nav>
 </header>
-
 <div class="hero">
 <p>YOUR COFFEE EXPERIENCE STARTS HERE</p>
 <h1>اكتشف عالم <span>القهوة</span></h1>
 <p>وصفات احترافية، إعدادات دقيقة، وتجارب قهوة مختلفة.</p>
-<button class="btn" onclick="document.getElementById('recipes').scrollIntoView({behavior:'smooth'})">
+<button class="btn" onclick="document.getElementById('recipes').scrollIntoView()">
 اكتشف الوصفات
 </button>
 </div>
-
 <section id="categories">
 <h2 class="title">استكشف الأقسام</h2>
 <div class="categories">
@@ -180,44 +181,75 @@ border-top:1px solid #302820;
 </div>
 </div>
 </section>
-
 <section id="recipes">
 <h2 class="title">وصفات القهوة ☕</h2>
 <div class="recipes" id="recipeList"></div>
 </section>
-
 <section id="calculator">
 <h2 class="title">Coffee Calculator</h2>
 <div class="calculator">
 <p>احسب كمية الماء والثلج حسب كمية القهوة.</p>
 
-<label>كمية القهوة (غرام)</label>
-<input type="number" id="coffee" value="20" min="1">
-
-<label>نسبة التخمير</label>
-<select id="ratio">
+كمية القهوة (غرام)
+نسبة التخمير
 <option value="15">1:15</option>
 <option value="16" selected>1:16</option>
 <option value="17">1:17</option>
 <option value="18">1:18</option>
 </select>
 
-<label>نوع التحضير</label>
-<select id="type">
+نوع التحضير
 <option value="hot">Hot V60</option>
 <option value="cold">Iced V60</option>
 </select>
 
-<button class="btn" onclick="calculate()">Calculate</button>
+Calculate
+
 <div class="result" id="result"></div>
 </div>
 </section>
+<section id="profiles">
+<h2 class="title">☕ Coffee Profiles</h2>
+<p style="color:#b9aa98">سجّل أنواع البن المفضلة عندك واحتفظ بتفاصيلها.</p>
+<div class="calculator">
 
+Bean Name
+Coffee Roaster
+Country of Origin
+<option>Ethiopia</option>
+<option>Colombia</option>
+<option>Brazil</option>
+<option>Kenya</option>
+<option>Panama</option>
+<option>Yemen</option>
+<option>Other</option>
+</select>
+
+Processing
+<option>Washed</option>
+<option>Natural</option>
+<option>Anaerobic</option>
+<option>Honey</option>
+</select>
+
+Roast Level
+<option>Light</option>
+<option>Medium</option>
+<option>Dark</option>
+</select>
+
+Flavor Notes
+Rating / 10
+SAVE COFFEE PROFILE
+
+</div>
+<h2 class="title">My Coffee Collection</h2>
+<div id="beanList" class="recipes"></div>
+</section>
 <footer>
 BREW LAB © 2026
 <p>MADE FOR COFFEE LOVERS.</p>
 </footer>
-
 <script>
 const recipes=[
 {
@@ -225,65 +257,46 @@ name:"Classic V60",
 type:"V60",
 emoji:"☕",
 description:"وصفة كلاسيكية متوازنة لمحبي القهوة المختصة.",
-coffee:"20g",
-water:"320ml",
-temp:"93°C",
-grind:"Medium"
+coffee:"20g",water:"320ml",temp:"93°C",grind:"Medium"
 },
 {
 name:"Chocolate V60",
 type:"V60",
 emoji:"🍫",
 description:"وصفة تبرز نكهات الشوكولاتة والكاكاو.",
-coffee:"20g",
-water:"300ml",
-temp:"92°C",
-grind:"Medium Fine"
+coffee:"20g",water:"300ml",temp:"92°C",grind:"Medium Fine"
 },
 {
 name:"xBloom Signature",
 type:"xBloom",
 emoji:"⚙️",
-description:"وصفة مخصصة لتجربة القهوة باستخدام xBloom.",
-coffee:"18g",
-water:"270ml",
-temp:"93°C",
-grind:"Medium"
+description:"وصفة لتجربة القهوة باستخدام xBloom.",
+coffee:"18g",water:"270ml",temp:"93°C",grind:"Medium"
 },
 {
 name:"Iced V60",
 type:"Cold",
 emoji:"🧊",
 description:"قهوة باردة منعشة بطعم مركز.",
-coffee:"20g",
-water:"150ml + 150g ice",
-temp:"92°C",
-grind:"Medium Fine"
+coffee:"20g",water:"150ml + 150g ice",temp:"92°C",grind:"Medium Fine"
 },
 {
 name:"Fruity V60",
 type:"V60",
 emoji:"🍓",
 description:"وصفة تبرز النكهات الفاكهية والحموضة اللطيفة.",
-coffee:"20g",
-water:"320ml",
-temp:"94°C",
-grind:"Medium"
+coffee:"20g",water:"320ml",temp:"94°C",grind:"Medium"
 },
 {
 name:"xBloom Iced",
 type:"xBloom",
 emoji:"❄️",
 description:"تجربة قهوة باردة باستخدام مكينة xBloom.",
-coffee:"18g",
-water:"200ml",
-temp:"92°C",
-grind:"Medium"
+coffee:"18g",water:"200ml",temp:"92°C",grind:"Medium"
 }
 ];
-
 function showRecipes(list){
-document.getElementById("recipeList").innerHTML=list.map((r,i)=>`
+document.getElementById("recipeList").innerHTML=list.map(r=>`
 <div class="card">
 <div class="photo">${r.emoji}</div>
 <div class="card-content">
@@ -303,24 +316,19 @@ View Recipe
 </div>
 `).join("");
 }
-
 function filterRecipes(type){
 showRecipes(type==="All"?recipes:recipes.filter(r=>r.type===type));
 document.getElementById("recipes").scrollIntoView({behavior:"smooth"});
 }
-
 function calculate(){
 let coffee=Number(document.getElementById("coffee").value);
 let ratio=Number(document.getElementById("ratio").value);
 let type=document.getElementById("type").value;
-
 if(!Number.isFinite(coffee)||coffee<=0){
 document.getElementById("result").innerHTML="أدخل كمية صحيحة.";
 return;
 }
-
 let total=coffee*ratio;
-
 if(type==="hot"){
 document.getElementById("result").innerHTML=
 "إجمالي الماء: "+total+" ml";
@@ -331,10 +339,68 @@ document.getElementById("result").innerHTML=
 "الماء الساخن: "+water+" ml<br>الثلج: "+ice+" g";
 }
 }
-
+let beans=JSON.parse(localStorage.getItem("brewBeans")||"[]");
+function escapeHTML(value){
+return String(value).replace(/[&<>"']/g,c=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+}
+function addBean(){
+const bean={
+name:document.getElementById("beanName").value.trim(),
+roaster:document.getElementById("roaster").value.trim(),
+origin:document.getElementById("origin").value,
+processing:document.getElementById("processing").value,
+roast:document.getElementById("roast").value,
+flavors:document.getElementById("flavors").value.trim(),
+rating:Number(document.getElementById("rating").value)
+};
+if(!bean.name||!bean.roaster||!bean.flavors){
+alert("Please complete all fields");
+return;
+}
+if(bean.rating<1||bean.rating>10){
+alert("Rating must be between 1 and 10");
+return;
+}
+beans.push(bean);
+localStorage.setItem("brewBeans",JSON.stringify(beans));
+renderBeans();
+document.getElementById("beanName").value="";
+document.getElementById("roaster").value="";
+document.getElementById("flavors").value="";
+alert("Coffee profile saved successfully!");
+}
+function renderBeans(){
+document.getElementById("beanList").innerHTML=beans.map((b,i)=>`
+<div class="card">
+<div class="photo">☕</div>
+<div class="card-content">
+<h3>${escapeHTML(b.name)}</h3>
+<p>Roaster: ${escapeHTML(b.roaster)}</p>
+<div class="details">
+Origin: ${escapeHTML(b.origin)}<br>
+Processing: ${escapeHTML(b.processing)}<br>
+Roast: ${escapeHTML(b.roast)}<br>
+Flavors: ${escapeHTML(b.flavors)}<br>
+Rating: ⭐ ${b.rating}/10
+</div>
+<br>
+<button onclick="deleteBean(${i})">DELETE PROFILE</button>
+</div>
+</div>
+`).join("")||'<p class="empty">No coffee profiles yet.</p>';
+}
+function deleteBean(i){
+if(confirm("Delete this coffee profile?")){
+beans.splice(i,1);
+localStorage.setItem("brewBeans",JSON.stringify(beans));
+renderBeans();
+}
+}
 showRecipes(recipes);
 calculate();
+renderBeans();
 </script>
-
 </body>
 </html>
