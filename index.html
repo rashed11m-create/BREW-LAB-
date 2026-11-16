@@ -44,6 +44,7 @@ label{color:#d6ad7b;font-size:14px}
 .aba-card .photo{font-size:65px}
 .aba-link{display:block;text-decoration:none;background:#c69b6b;color:#17120d;padding:13px;border-radius:7px;font-weight:bold;margin-top:15px}
 .review-image{width:100%;height:180px;object-fit:cover;border-radius:10px}
+.image-preview{display:none;width:100%;max-height:230px;object-fit:contain;border-radius:10px;margin:10px 0;border:1px solid #594532}
 footer{text-align:center;padding:30px;color:#928475;border-top:1px solid #302820}
 .admin-section{display:none;padding:35px 6%;background:#19140f;border-top:1px solid #493829}
 .admin-section.show{display:block}
@@ -186,8 +187,9 @@ VISIT INSTAGRAM
 <div class="box">
 <label>Product Name</label>
 <input id="reviewProduct" placeholder="اسم المنتج">
-<label>Product Image URL</label>
-<input id="reviewImage" placeholder="رابط صورة المنتج (اختياري)">
+<label>Upload Product Image</label>
+<input type="file" id="reviewImageFile" accept="image/*" onchange="previewReviewImage()">
+<img id="reviewImagePreview" class="image-preview" alt="Image preview">
 <label>Your Rating</label>
 <select id="reviewRating">
 <option value="5">⭐⭐⭐⭐⭐ 5/5</option>
@@ -238,6 +240,7 @@ BREW LAB © 2026
 const SUPABASE_URL = "https://ajsjeqgxcpggtitufort.supabase.co";
 const SUPABASE_KEY = "sb_publishable_AHpDlihcJKdTiTv7wuW63g_9spxR6pu";
 const ADMIN_UID = "952c457d-235e-4ac5-b4b7-32e73c1bc384";
+const STORAGE_BUCKET = "aba-review-images";
 const supabaseClient = window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
@@ -438,10 +441,54 @@ localStorage.setItem("brewBeans",JSON.stringify(beans));
 renderBeans();
 }
 }
+/* IMAGE PREVIEW */
+function previewReviewImage(){
+const file=document.getElementById("reviewImageFile").files[0];
+const preview=document.getElementById("reviewImagePreview");
+if(!file){
+preview.style.display="none";
+preview.src="";
+return;
+}
+if(!file.type.startsWith("image/")){
+alert("اختر ملف صورة فقط.");
+document.getElementById("reviewImageFile").value="";
+preview.style.display="none";
+return;
+}
+if(file.size>5*1024*1024){
+alert("حجم الصورة لازم يكون أقل من 5MB.");
+document.getElementById("reviewImageFile").value="";
+preview.style.display="none";
+return;
+}
+preview.src=URL.createObjectURL(file);
+preview.style.display="block";
+}
+/* UPLOAD IMAGE TO SUPABASE */
+async function uploadReviewImage(file){
+const extension=file.name.split(".").pop().toLowerCase();
+const allowed=["jpg","jpeg","png","webp","gif"];
+if(!allowed.includes(extension)){
+throw new Error("نوع الصورة غير مدعوم. استخدم JPG أو PNG أو WEBP.");
+}
+const filePath=Date.now()+"-"+crypto.randomUUID()+"."+extension;
+const {error}=await supabaseClient.storage
+.from(STORAGE_BUCKET)
+.upload(filePath,file,{
+contentType:file.type,
+upsert:false
+});
+if(error)throw error;
+const {data}=supabaseClient.storage
+.from(STORAGE_BUCKET)
+.getPublicUrl(filePath);
+return data.publicUrl;
+}
 /* ABA REVIEWS */
 async function addReview(){
 const product=document.getElementById("reviewProduct").value.trim();
-const image=document.getElementById("reviewImage").value.trim();
+const file=document.getElementById("reviewImageFile").files[0];
 const rating=Number(document.getElementById("reviewRating").value);
 const review=document.getElementById("reviewText").value.trim();
 const status=document.getElementById("reviewStatus");
@@ -450,29 +497,50 @@ if(!product||!review){
 alert("Please enter product name and review");
 return;
 }
-if(image&&!/^https?:\/\//i.test(image)){
-alert("Please enter a valid image URL");
+if(file){
+if(!file.type.startsWith("image/")){
+alert("اختر صورة صحيحة.");
 return;
+}
+if(file.size>5*1024*1024){
+alert("حجم الصورة لازم يكون أقل من 5MB.");
+return;
+}
 }
 button.disabled=true;
-button.innerText="SUBMITTING...";
-status.innerText="جاري إرسال التقييم...";
+button.innerText="UPLOADING...";
+status.innerText="جاري تجهيز التقييم والصورة...";
+try{
+let imageUrl=null;
+if(file){
+status.innerText="جاري رفع الصورة...";
+imageUrl=await uploadReviewImage(file);
+}
+status.innerText="جاري حفظ التقييم...";
 const {error}=await supabaseClient
 .from("aba_reviews")
-.insert([{product,image_url:image||null,rating,review}]);
-button.disabled=false;
-button.innerText="SUBMIT REVIEW";
-if(error){
-console.error(error);
-status.innerText="تعذر إرسال التقييم. حاول مرة ثانية.";
-alert("Error: "+error.message);
-return;
-}
+.insert([{
+product:product,
+image_url:imageUrl,
+rating:rating,
+review:review
+}]);
+if(error)throw error;
 document.getElementById("reviewProduct").value="";
-document.getElementById("reviewImage").value="";
+document.getElementById("reviewImageFile").value="";
 document.getElementById("reviewText").value="";
+const preview=document.getElementById("reviewImagePreview");
+preview.src="";
+preview.style.display="none";
 status.innerText="تم إرسال تقييمك بنجاح! ⭐";
 await renderReviews();
+}catch(error){
+console.error(error);
+status.innerText="تعذر إرسال التقييم.";
+alert("Error: "+error.message);
+}
+button.disabled=false;
+button.innerText="SUBMIT REVIEW";
 }
 async function renderReviews(){
 const list=document.getElementById("reviewList");
