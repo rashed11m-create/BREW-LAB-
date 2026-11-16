@@ -38,12 +38,14 @@ label{color:#d6ad7b;font-size:14px}
 .timer-stage{font-size:19px;color:#e5c49b;margin:15px}
 .progress{height:8px;background:#493829;border-radius:10px;margin:20px 0;overflow:hidden}
 .progress div{height:100%;background:#d6ad7b;width:0%;transition:.3s}
+.aba-card{max-width:380px;text-align:center}
+.aba-card .photo{font-size:65px}
+.aba-link{display:block;text-decoration:none;background:#c69b6b;color:#17120d;padding:13px;border-radius:7px;font-weight:bold;margin-top:15px}
 footer{text-align:center;padding:30px;color:#928475;border-top:1px solid #302820}
 @media(max-width:600px){.hero h1{font-size:32px}.timer-display{font-size:52px}header{justify-content:center}nav{text-align:center}}
 </style>
 </head>
 <body>
-
 <header>
 <div class="logo">BREW LAB ☕</div>
 <nav>
@@ -52,16 +54,15 @@ footer{text-align:center;padding:30px;color:#928475;border-top:1px solid #302820
 <a href="#calculator">Calculator</a>
 <a href="#timer">Brew Timer</a>
 <a href="#profiles">Coffee Profiles</a>
+<a href="#aba">ABA</a>
 </nav>
 </header>
-
 <div class="hero">
 <p>YOUR COFFEE EXPERIENCE STARTS HERE</p>
 <h1>اكتشف عالم <span>القهوة</span></h1>
 <p>وصفات احترافية وتجارب قهوة مختلفة.</p>
 <button class="btn" onclick="go('recipes')">اكتشف الوصفات</button>
 </div>
-
 <section id="categories">
 <h2 class="title">استكشف الأقسام</h2>
 <div class="categories">
@@ -71,12 +72,10 @@ footer{text-align:center;padding:30px;color:#928475;border-top:1px solid #302820
 <div class="category" onclick="filterRecipes('All')"><h3>ALL RECIPES</h3><p>جميع الوصفات</p></div>
 </div>
 </section>
-
 <section id="recipes">
 <h2 class="title">وصفات القهوة ☕</h2>
 <div class="recipes" id="recipeList"></div>
 </section>
-
 <section id="calculator">
 <h2 class="title">Coffee Calculator</h2>
 <div class="box">
@@ -98,42 +97,30 @@ footer{text-align:center;padding:30px;color:#928475;border-top:1px solid #302820
 <div class="result" id="result"></div>
 </div>
 </section>
-
-<!-- SMART BREW TIMER -->
 <section id="timer">
 <h2 class="title">⏱️ Smart Brew Timer</h2>
 <div class="box timer">
-
 <label>اختر طريقة التحضير</label>
 <select id="brewMode" onchange="changeMode()">
 <option value="v60">V60</option>
 <option value="xbloom">xBloom</option>
 </select>
-
 <div class="timer-display" id="clock">00:00</div>
 <div class="timer-stage" id="stage">جاهز للتحضير ☕</div>
-
 <div class="progress"><div id="progressBar"></div></div>
-
 <div id="stageInfo" class="result">اضغط Start للبدء</div>
-
 <button class="btn" onclick="startTimer()">START</button>
 <button class="btn" onclick="pauseTimer()">PAUSE</button>
 <button class="btn" onclick="resetTimer()">RESET</button>
-
 </div>
 </section>
-
 <section id="profiles">
 <h2 class="title">☕ Coffee Profiles</h2>
 <div class="box">
-
 <label>Bean Name</label>
 <input id="beanName" placeholder="Ethiopia Guji">
-
 <label>Coffee Roaster</label>
 <input id="roaster" placeholder="اسم المحمصة">
-
 <label>Country of Origin</label>
 <select id="origin">
 <option>Ethiopia</option>
@@ -144,7 +131,6 @@ footer{text-align:center;padding:30px;color:#928475;border-top:1px solid #302820
 <option>Yemen</option>
 <option>Other</option>
 </select>
-
 <label>Processing</label>
 <select id="processing">
 <option>Washed</option>
@@ -152,32 +138,38 @@ footer{text-align:center;padding:30px;color:#928475;border-top:1px solid #302820
 <option>Anaerobic</option>
 <option>Honey</option>
 </select>
-
 <label>Roast Level</label>
 <select id="roast">
 <option>Light</option>
 <option>Medium</option>
 <option>Dark</option>
 </select>
-
 <label>Flavor Notes</label>
 <input id="flavors" placeholder="Chocolate, Strawberry, Nuts">
-
 <label>Rating / 10</label>
 <input id="rating" type="number" min="1" max="10" value="8">
-
 <button class="btn" onclick="addBean()">SAVE PROFILE</button>
 </div>
-
 <h2 class="title">My Coffee Collection</h2>
 <div class="recipes" id="beanList"></div>
 </section>
-
+<!-- ABA SECTION -->
+<section id="aba">
+<h2 class="title">ABA</h2>
+<div class="card aba-card">
+<div class="photo">📸</div>
+<h3>SOUL AE</h3>
+<p>Instagram Account</p>
+<div class="details">@soul.ae_</div>
+<a class="aba-link" href="https://www.instagram.com/soul.ae_?cplk=MW12cDZoZ3AxaTAxcQ==" target="_blank" rel="noopener noreferrer">
+VISIT INSTAGRAM
+</a>
+</div>
+</section>
 <footer>
 BREW LAB © 2026
 <p>MADE FOR COFFEE LOVERS.</p>
 </footer>
-
 <script>
 const recipes=[
 {name:"Classic V60",type:"V60",emoji:"☕",description:"وصفة كلاسيكية متوازنة.",coffee:"20g",water:"320ml",temp:"93°C",grind:"Medium"},
@@ -187,11 +179,9 @@ const recipes=[
 {name:"Fruity V60",type:"V60",emoji:"🍓",description:"نكهات فاكهية وحموضة لطيفة.",coffee:"20g",water:"320ml",temp:"94°C",grind:"Medium"},
 {name:"xBloom Iced",type:"xBloom",emoji:"❄️",description:"قهوة باردة باستخدام xBloom.",coffee:"18g",water:"200ml",temp:"92°C",grind:"Medium"}
 ];
-
 function go(id){
 document.getElementById(id).scrollIntoView({behavior:"smooth"});
 }
-
 function showRecipes(list){
 document.getElementById("recipeList").innerHTML=list.map(r=>`
 <div class="card">
@@ -208,12 +198,10 @@ Grind: ${r.grind}
 <button onclick="alert('${r.name}\\nCoffee: ${r.coffee}\\nWater: ${r.water}\\nTemperature: ${r.temp}\\nGrind: ${r.grind}')">VIEW RECIPE</button>
 </div>`).join("");
 }
-
 function filterRecipes(type){
 showRecipes(type==="All"?recipes:recipes.filter(r=>r.type===type));
 go("recipes");
 }
-
 function calculate(){
 let c=Number(document.getElementById("coffee").value);
 let r=Number(document.getElementById("ratio").value);
@@ -230,13 +218,11 @@ let ice=Math.round(total*.5);
 document.getElementById("result").innerHTML="الماء الساخن: "+(total-ice)+" ml<br>الثلج: "+ice+" g";
 }
 }
-
 /* BREW TIMER */
 let timerInterval=null;
 let elapsed=0;
 let running=false;
 let lastStage=-1;
-
 const v60Stages=[
 {time:0,name:"Blooming",info:"صب 40g ماء لترطيب القهوة."},
 {time:30,name:"Pour 1",info:"ابدأ الصبة الأولى بهدوء."},
@@ -245,30 +231,25 @@ const v60Stages=[
 {time:150,name:"Drawdown",info:"انتظر نزول الماء."},
 {time:180,name:"Finished ☕",info:"انتهى التحضير! استمتع بقهوّتك."}
 ];
-
 const xBloomStages=[
 {time:0,name:"Preparing",info:"جهّز البن والماء والمكينة."},
 {time:30,name:"Brewing",info:"تابع عملية التحضير."},
 {time:120,name:"Finishing",info:"اقترب التحضير من الانتهاء."},
 {time:180,name:"Finished ☕",info:"انتهى التحضير!"}
 ];
-
 function getStages(){
 return document.getElementById("brewMode").value==="v60"?v60Stages:xBloomStages;
 }
-
 function changeMode(){
 resetTimer();
 document.getElementById("stage").innerText="جاهز للتحضير ☕";
 document.getElementById("stageInfo").innerText="اضغط Start للبدء";
 }
-
 function formatTime(s){
 let m=Math.floor(s/60);
 let sec=s%60;
 return String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0");
 }
-
 function beep(){
 try{
 let ctx=new (window.AudioContext||window.webkitAudioContext)();
@@ -282,36 +263,28 @@ oscillator.start();
 oscillator.stop(ctx.currentTime+.2);
 }catch(e){}
 }
-
 function updateTimer(){
 let stages=getStages();
 let stageIndex=0;
-
 for(let i=0;i<stages.length;i++){
 if(elapsed>=stages[i].time)stageIndex=i;
 }
-
 let current=stages[stageIndex];
-
 if(stageIndex!==lastStage){
 lastStage=stageIndex;
 document.getElementById("stage").innerText=current.name;
 document.getElementById("stageInfo").innerText=current.info;
 if(elapsed>0)beep();
 }
-
 document.getElementById("clock").innerText=formatTime(elapsed);
-
 let total=stages[stages.length-1].time;
 document.getElementById("progressBar").style.width=Math.min(100,elapsed/total*100)+"%";
-
 if(elapsed>=total){
 pauseTimer();
 document.getElementById("stage").innerText="Finished ☕";
 document.getElementById("stageInfo").innerText="استمتع بقهوّتك!";
 }
 }
-
 function startTimer(){
 if(running)return;
 if(elapsed>=getStages()[getStages().length-1].time)resetTimer();
@@ -321,12 +294,10 @@ elapsed++;
 updateTimer();
 },1000);
 }
-
 function pauseTimer(){
 running=false;
 clearInterval(timerInterval);
 }
-
 function resetTimer(){
 pauseTimer();
 elapsed=0;
@@ -336,16 +307,13 @@ document.getElementById("stage").innerText="جاهز للتحضير ☕";
 document.getElementById("stageInfo").innerText="اضغط Start للبدء";
 document.getElementById("progressBar").style.width="0%";
 }
-
 /* COFFEE PROFILES */
 let beans=JSON.parse(localStorage.getItem("brewBeans")||"[]");
-
 function escapeHTML(v){
 return String(v).replace(/[&<>"']/g,c=>({
 "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
 }[c]));
 }
-
 function addBean(){
 let bean={
 name:document.getElementById("beanName").value.trim(),
@@ -356,7 +324,6 @@ roast:document.getElementById("roast").value,
 flavors:document.getElementById("flavors").value.trim(),
 rating:Number(document.getElementById("rating").value)
 };
-
 if(!bean.name||!bean.roaster||!bean.flavors){
 alert("Please complete all fields");
 return;
@@ -365,17 +332,14 @@ if(!Number.isInteger(bean.rating)||bean.rating<1||bean.rating>10){
 alert("Rating must be between 1 and 10");
 return;
 }
-
 beans.push(bean);
 localStorage.setItem("brewBeans",JSON.stringify(beans));
 renderBeans();
-
 ["beanName","roaster","flavors"].forEach(id=>{
 document.getElementById(id).value="";
 });
 alert("Coffee profile saved!");
 }
-
 function renderBeans(){
 document.getElementById("beanList").innerHTML=beans.map((b,i)=>`
 <div class="card">
@@ -393,7 +357,6 @@ Rating: ⭐ ${b.rating}/10
 <button onclick="deleteBean(${i})">DELETE PROFILE</button>
 </div>`).join("")||"<p>No coffee profiles yet.</p>";
 }
-
 function deleteBean(i){
 if(confirm("Delete this profile?")){
 beans.splice(i,1);
@@ -401,11 +364,9 @@ localStorage.setItem("brewBeans",JSON.stringify(beans));
 renderBeans();
 }
 }
-
 showRecipes(recipes);
 calculate();
 renderBeans();
 </script>
-
 </body>
 </html>
