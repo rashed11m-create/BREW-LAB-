@@ -45,6 +45,14 @@ label{color:#d6ad7b;font-size:14px}
 .aba-link{display:block;text-decoration:none;background:#c69b6b;color:#17120d;padding:13px;border-radius:7px;font-weight:bold;margin-top:15px}
 .review-image{width:100%;height:180px;object-fit:cover;border-radius:10px}
 footer{text-align:center;padding:30px;color:#928475;border-top:1px solid #302820}
+.admin-section{display:none;padding:35px 6%;background:#19140f;border-top:1px solid #493829}
+.admin-section.show{display:block}
+.admin-box{max-width:650px;margin:auto}
+.admin-review{background:#211c17;border:1px solid #493829;border-radius:12px;padding:18px;margin:15px 0}
+.delete-btn{background:#a83b32!important;color:white!important;margin-top:12px}
+.admin-status{color:#d6ad7b;margin:12px 0;line-height:1.8}
+.admin-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+#adminLogin,#adminDashboard{display:none}
 @media(max-width:600px){
 .hero h1{font-size:32px}
 .timer-display{font-size:52px}
@@ -196,14 +204,40 @@ VISIT INSTAGRAM
 <h2 class="title" style="margin-top:30px">Customer Reviews</h2>
 <div class="recipes" id="reviewList">Loading reviews...</div>
 </section>
+<!-- ADMIN DASHBOARD -->
+<section class="admin-section" id="adminSection">
+<div class="admin-box">
+<h2 class="title">🔐 BREW LAB ADMIN</h2>
+<div id="adminLogin" class="box">
+<p>تسجيل دخول المسؤول</p>
+<label>Email</label>
+<input type="email" id="adminEmail" placeholder="Your email" autocomplete="username">
+<label>Password</label>
+<input type="password" id="adminPassword" placeholder="Your password" autocomplete="current-password">
+<button class="btn" id="adminLoginBtn" onclick="adminLogin()">LOGIN</button>
+<div class="admin-status" id="adminLoginStatus"></div>
+</div>
+<div id="adminDashboard" class="box">
+<div class="admin-top">
+<h3>Dashboard</h3>
+<button class="btn" onclick="adminLogout()">LOG OUT</button>
+</div>
+<div class="admin-status" id="adminStats">Loading...</div>
+<button class="btn" onclick="loadAdminReviews()">REFRESH REVIEWS</button>
+<div id="adminReviewList"></div>
+</div>
+</div>
+</section>
 <footer>
 BREW LAB © 2026
 <p>MADE FOR COFFEE LOVERS.</p>
+<button class="btn" onclick="openAdmin()">🔐 ADMIN</button>
 </footer>
 <script>
 /* SUPABASE CONNECTION */
 const SUPABASE_URL = "https://ajsjeqgxcpggtitufort.supabase.co";
 const SUPABASE_KEY = "sb_publishable_AHpDlihcJKdTiTv7wuW63g_9spxR6pu";
+const ADMIN_UID = "952c457d-235e-4ac5-b4b7-32e73c1bc384";
 const supabaseClient = window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
@@ -404,7 +438,7 @@ localStorage.setItem("brewBeans",JSON.stringify(beans));
 renderBeans();
 }
 }
-/* ABA REVIEWS - SUPABASE DATABASE */
+/* ABA REVIEWS */
 async function addReview(){
 const product=document.getElementById("reviewProduct").value.trim();
 const image=document.getElementById("reviewImage").value.trim();
@@ -425,12 +459,7 @@ button.innerText="SUBMITTING...";
 status.innerText="جاري إرسال التقييم...";
 const {error}=await supabaseClient
 .from("aba_reviews")
-.insert([{
-product:product,
-image_url:image||null,
-rating:rating,
-review:review
-}]);
+.insert([{product,image_url:image||null,rating,review}]);
 button.disabled=false;
 button.innerText="SUBMIT REVIEW";
 if(error){
@@ -469,6 +498,132 @@ ${r.image_url?`<img class="review-image" src="${escapeHTML(r.image_url)}" alt="P
 <p>${escapeHTML(r.review)}</p>
 </div>
 `).join("");
+}
+/* ADMIN DASHBOARD */
+function openAdmin(){
+const section=document.getElementById("adminSection");
+section.classList.toggle("show");
+if(section.classList.contains("show")){
+section.scrollIntoView({behavior:"smooth"});
+checkAdminSession();
+}
+}
+function showAdminLogin(message=""){
+document.getElementById("adminLogin").style.display="block";
+document.getElementById("adminDashboard").style.display="none";
+document.getElementById("adminLoginStatus").innerText=message;
+}
+function showAdminDashboard(){
+document.getElementById("adminLogin").style.display="none";
+document.getElementById("adminDashboard").style.display="block";
+loadAdminReviews();
+}
+async function checkAdminSession(){
+const {data,error}=await supabaseClient.auth.getSession();
+if(error||!data.session){
+showAdminLogin();
+return;
+}
+if(data.session.user.id!==ADMIN_UID){
+await supabaseClient.auth.signOut();
+showAdminLogin("هذا الحساب غير مصرح له بدخول لوحة التحكم.");
+return;
+}
+showAdminDashboard();
+}
+async function adminLogin(){
+const email=document.getElementById("adminEmail").value.trim();
+const password=document.getElementById("adminPassword").value;
+const status=document.getElementById("adminLoginStatus");
+const button=document.getElementById("adminLoginBtn");
+if(!email||!password){
+status.innerText="أدخل الإيميل وكلمة المرور.";
+return;
+}
+button.disabled=true;
+button.innerText="LOGGING IN...";
+status.innerText="جاري تسجيل الدخول...";
+const {data,error}=await supabaseClient.auth.signInWithPassword({
+email:email,
+password:password
+});
+button.disabled=false;
+button.innerText="LOGIN";
+if(error){
+status.innerText="فشل تسجيل الدخول: "+error.message;
+return;
+}
+if(data.user.id!==ADMIN_UID){
+await supabaseClient.auth.signOut();
+status.innerText="هذا الحساب غير مصرح له بدخول لوحة التحكم.";
+return;
+}
+document.getElementById("adminPassword").value="";
+showAdminDashboard();
+}
+async function adminLogout(){
+await supabaseClient.auth.signOut();
+document.getElementById("adminEmail").value="";
+document.getElementById("adminPassword").value="";
+showAdminLogin("تم تسجيل الخروج بنجاح.");
+}
+async function loadAdminReviews(){
+const list=document.getElementById("adminReviewList");
+const stats=document.getElementById("adminStats");
+list.innerHTML="<p>Loading...</p>";
+stats.innerText="جاري تحميل الإحصائيات...";
+const {data,error}=await supabaseClient
+.from("aba_reviews")
+.select("id,product,image_url,rating,review,created_at")
+.order("created_at",{ascending:false});
+if(error){
+list.innerHTML="<p>تعذر تحميل التقييمات.</p>";
+stats.innerText=error.message;
+return;
+}
+const total=data.length;
+const average=total
+?(data.reduce((sum,r)=>sum+Number(r.rating),0)/total).toFixed(1)
+:"0";
+stats.innerHTML=
+"عدد التقييمات: "+total+
+"<br>متوسط التقييم: ⭐ "+average+"/5";
+if(total===0){
+list.innerHTML="<p>لا توجد تقييمات حالياً.</p>";
+return;
+}
+list.innerHTML=data.map(r=>`
+<div class="admin-review">
+${r.image_url?`<img class="review-image" src="${escapeHTML(r.image_url)}" alt="Product image">`:""}
+<h3>${escapeHTML(r.product)}</h3>
+<div class="details">⭐ ${escapeHTML(r.rating)}/5</div>
+<p>${escapeHTML(r.review)}</p>
+<div class="details">${new Date(r.created_at).toLocaleString("en-GB")}</div>
+<button class="btn delete-btn" onclick="deleteReview(${Number(r.id)})">
+DELETE REVIEW 🗑️
+</button>
+</div>
+`).join("");
+}
+async function deleteReview(id){
+if(!confirm("هل أنت متأكد أنك تريد حذف هذا التقييم؟"))return;
+const {data:sessionData}=await supabaseClient.auth.getSession();
+if(!sessionData.session||sessionData.session.user.id!==ADMIN_UID){
+alert("غير مصرح لك بالحذف. سجل دخولك مرة ثانية.");
+showAdminLogin();
+return;
+}
+const {error}=await supabaseClient
+.from("aba_reviews")
+.delete()
+.eq("id",id);
+if(error){
+alert("تعذر حذف التقييم: "+error.message);
+return;
+}
+alert("تم حذف التقييم بنجاح.");
+await loadAdminReviews();
+await renderReviews();
 }
 /* START WEBSITE */
 showRecipes(recipes);
